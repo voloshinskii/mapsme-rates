@@ -6,17 +6,14 @@ import BigNumber from 'bignumber.js';
 
 async function fetchRates(amount, currencyFrom, currencyTo, fee) {
   try {
-    const resp = await fetch(`https://api.benqq.io/v1/rates?amount=${amount}&currencyFrom=${currencyFrom}&currencyTo=${currencyTo}&fee=${fee}`);
-    const json = await resp.json();
     const controller = new AbortController();
     const id = setTimeout(() => {
       controller.abort()
       throw new Error('timeout');
     }, 12000);
-    const response = await fetch(resource, {
-      ...options,
-      signal: controller.signal  
-    });
+    const resp = await fetch(`https://api.benqq.io/v1/rates?amount=${amount}&currencyFrom=${currencyFrom}&currencyTo=${currencyTo}&fee=${fee}`, { signal: controller.signal });
+    const json = await resp.json();
+    clearTimeout(id);
     return json.data.data.crdhldBillAmt;
   } catch (e) {
     return fetchRates(amount, currencyFrom, currencyTo, fee);
