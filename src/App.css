@@ -1,5 +1,24 @@
+body, html, #root, .App {
+  height: 100%;
+}
+
 .App {
+  flex: 1;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.input-with-label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.input-with-label label {
+  margin-bottom: 4px;
 }
 
 .App-logo {
