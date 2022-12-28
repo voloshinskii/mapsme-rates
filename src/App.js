@@ -62,7 +62,7 @@ function App() {
 
   const handleCalculate = useCallback(async () => {
     setLoading(true);
-    const costInGBP = await fetchRates(parseFloat(value).toFixed(2), currencyOp, 'GBP', 0);
+    const costInGBP = await fetchRates(parseFloat(value.replace(',', '.')).toFixed(2), currencyOp, 'GBP', 0);
     const costInUSD = await calculateCMC(parseFloat(costInGBP), plans[plan].fee);
     setCalculatedValue(costInUSD);
     setLoading(false);
