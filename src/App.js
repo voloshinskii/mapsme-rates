@@ -20,33 +20,33 @@ async function fetchRates(amount, currencyFrom, currencyTo, fee) {
   }
 }
 
-async function calculateCMC(amount) {
+async function calculateCMC(amount, fee) {
   const resp = await fetch(`https://api.coinbase.com/v2/exchange-rates?currency=USDC`);
   const json = await resp.json();
   const GBPRate = new BigNumber('1').div(new BigNumber(String(json.data.rates.GBP)));
-  return new BigNumber(amount).times(GBPRate).toNumber();
+  return new BigNumber(amount).times(GBPRate).times(fee).toNumber();
 }
 
 const mappedCurrencies = currencies.map(currency => ({ value: currency.cc, label: currency.name }));
 const plans = {
   free: {
     name: 'Free (3%, 0.5$ FX Fee)',
-    fee: 3,
+    fee: 1.03,
     fx: 0.5
   },
   camper: {
     name: 'Happy Camper (2.5%, 0.4$ FX Fee)',
-    fee: 2.5,
+    fee: 1.025,
     fx: 0.4
   },
   nomad: {
     name: 'Digital Nomad (2%, 0.25$ FX Fee)',
-    fee: 2,
+    fee: 1.02,
     fx: 0.25
   },
   highflyer: {
     name: 'High Flyer (1.5%, 0.1$ FX Fee)',
-    fee: 1.5,
+    fee: 1.015,
     fx: 0.1
   }
 };
@@ -62,8 +62,8 @@ function App() {
 
   const handleCalculate = useCallback(async () => {
     setLoading(true);
-    const costInGBP = await fetchRates(parseFloat(value).toFixed(2), currencyOp, 'GBP', plans[plan].fee);
-    const costInUSD = await calculateCMC(parseFloat(costInGBP));
+    const costInGBP = await fetchRates(parseFloat(value).toFixed(2), currencyOp, 'GBP', 0);
+    const costInUSD = await calculateCMC(parseFloat(costInGBP), plans[plan].fee);
     setCalculatedValue(costInUSD);
     setLoading(false);
   }, [currencyOp, plan, value]);
