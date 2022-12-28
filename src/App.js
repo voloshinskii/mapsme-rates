@@ -58,6 +58,7 @@ function App() {
   const [value, setValue] = useState();
   const [loading, setLoading] = useState(false);
   const [calculatedValue, setCalculatedValue] = useState(0);
+  const [withFxFee, setWithFxFee] = useState(true);
 
   const handleCalculate = useCallback(async () => {
     setLoading(true);
@@ -90,10 +91,14 @@ function App() {
         <input value={value} onChange={(e) => setValue(e.currentTarget.value)} />
       </div>
       <div className='input-with-label'>
+        <input type="checkbox" id="fxfee" name="fxfee" checked={withFxFee} onChange={() => setWithFxFee(!withFxFee)} />
+        <label for="fxfee">FX Fee</label>
+      </div>
+      <div className='input-with-label'>
         <button disabled={loading} onClick={handleCalculate}>Calculate!</button>
       </div>
       {calculatedValue ? <div className='input-with-label'>
-        <p>{(calculatedValue + plans[plan].fx).toFixed(2)}$</p>
+        <p>{(calculatedValue + (withFxFee ? plans[plan].fx : 0)).toFixed(2)}$</p>
       </div> : null}
       <div className='input-with-label'>
         <p style={{ width: "300px" }}>DISCLAIMER: exchange rates are approximate, but as close as possible to real ones. Service is not affiliated with maps.me</p>
