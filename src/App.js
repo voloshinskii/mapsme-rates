@@ -5,9 +5,22 @@ import Select from 'react-select';
 import BigNumber from 'bignumber.js';
 
 async function fetchRates(amount, currencyFrom, currencyTo, fee) {
-  const resp = await fetch(`https://api.benqq.io/v1/rates?amount=${amount}&currencyFrom=${currencyFrom}&currencyTo=${currencyTo}&fee=${fee}`);
-  const json = await resp.json();
-  return json.data.data.crdhldBillAmt;
+  try {
+    const resp = await fetch(`https://api.benqq.io/v1/rates?amount=${amount}&currencyFrom=${currencyFrom}&currencyTo=${currencyTo}&fee=${fee}`);
+    const json = await resp.json();
+    const controller = new AbortController();
+    const id = setTimeout(() => {
+      controller.abort()
+      throw new Error('timeout');
+    }, 12000);
+    const response = await fetch(resource, {
+      ...options,
+      signal: controller.signal  
+    });
+    return json.data.data.crdhldBillAmt;
+  } catch (e) {
+    return fetchRates(amount, currencyFrom, currencyTo, fee);
+  }
 }
 
 async function calculateCMC(amount) {
