@@ -97,11 +97,11 @@ function App() {
         <label>Transaction amount</label>
         <input value={value} onChange={(e) => setValue(e.currentTarget.value)} />
       </div>
-      <div className='input-with-label'>
+      <div className='input-with-label flex-row'>
         <input type="checkbox" id="fxfee" name="fxfee" checked={withFxFee} onChange={() => setWithFxFee(!withFxFee)} />
         <label for="fxfee">FX Fee</label>
       </div>
-      <div className='input-with-label'>
+      <div className='input-with-label flex-row'>
         <input type="checkbox" id="atmwithdrawal" name="atmwithdrawal" checked={isAtmWithdrawal} onChange={() => setIsAtmWithdrawal(!isAtmWithdrawal)} />
         <label for="atmwithdrawal">ATM Withdrawal</label>
       </div>

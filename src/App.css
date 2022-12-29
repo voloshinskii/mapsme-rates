@@ -14,8 +14,22 @@
   margin-bottom: 12px;
 }
 
+.input-with-label input[type='checkbox'] {
+  margin-right: 6px;
+}
+
+.flex-row {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
 .input-with-label label {
   margin-bottom: 4px;
+}
+
+.input-with-label.flex-row label {
+  margin-bottom: 0;
 }
 
 .App-logo {
