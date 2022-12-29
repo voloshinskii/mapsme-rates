@@ -34,21 +34,25 @@ const plans = {
   free: {
     name: 'Free (3%, 0.5$ FX Fee)',
     fee: 1.03,
+    atmWithdrawalFee: 1.06,
     fx: 0.5
   },
   camper: {
     name: 'Happy Camper (2.5%, 0.4$ FX Fee)',
     fee: 1.025,
+    atmWithdrawalFee: 1.05,
     fx: 0.4
   },
   nomad: {
     name: 'Digital Nomad (2%, 0.25$ FX Fee)',
     fee: 1.02,
+    atmWithdrawalFee: 1.04,
     fx: 0.25
   },
   highflyer: {
     name: 'High Flyer (1.5%, 0.1$ FX Fee)',
     fee: 1.015,
+    atmWithdrawalFee: 1.03,
     fx: 0.1
   }
 };
@@ -61,14 +65,15 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [calculatedValue, setCalculatedValue] = useState(0);
   const [withFxFee, setWithFxFee] = useState(true);
+  const [isAtmWithdrawal, setIsAtmWithdrawal] = useState(false);
 
   const handleCalculate = useCallback(async () => {
     setLoading(true);
     const costInGBP = await fetchRates(parseFloat(value.replace(',', '.')).toFixed(2), currencyOp, 'GBP', 0);
-    const costInUSD = await calculateCMC(parseFloat(costInGBP), plans[plan].fee);
+    const costInUSD = await calculateCMC(parseFloat(costInGBP), isAtmWithdrawal ? plans[plan].atmWithdrawalFee : plans[plan].fee);
     setCalculatedValue(costInUSD);
     setLoading(false);
-  }, [currencyOp, plan, value]);
+  }, [currencyOp, plan, value, isAtmWithdrawal]);
 
   return (
     <div className="App">
@@ -95,6 +100,10 @@ function App() {
       <div className='input-with-label'>
         <input type="checkbox" id="fxfee" name="fxfee" checked={withFxFee} onChange={() => setWithFxFee(!withFxFee)} />
         <label for="fxfee">FX Fee</label>
+      </div>
+      <div className='input-with-label'>
+        <input type="checkbox" id="atmwithdrawal" name="atmwithdrawal" checked={isAtmWithdrawal} onChange={() => setIsAtmWithdrawal(!isAtmWithdrawal)} />
+        <label for="atmwithdrawal">ATM Withdrawal</label>
       </div>
       <div className='input-with-label'>
         <button disabled={loading} onClick={handleCalculate}>Calculate!</button>
