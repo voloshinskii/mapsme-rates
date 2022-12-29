@@ -1,8 +1,10 @@
 import './App.css';
 import currencies from './currencies.json';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import Select from 'react-select';
 import BigNumber from 'bignumber.js';
+import { useSelectedCurrency } from './hooks/useSelectedCurrency';
+import { useSelectedPlan } from './hooks/useSelectedPlan';
 
 async function fetchRates(amount, currencyFrom, currencyTo, fee) {
   try {
@@ -21,9 +23,9 @@ async function fetchRates(amount, currencyFrom, currencyTo, fee) {
 }
 
 async function calculateCMC(amount, fee) {
-  const resp = await fetch(`https://api.coinbase.com/v2/exchange-rates?currency=USDC`);
+  const resp = await fetch(`https://api.benqq.io/v1/rates/usdc-gbp`);
   const json = await resp.json();
-  const GBPRate = new BigNumber('1').div(new BigNumber(String(json.data.rates.GBP)));
+  const GBPRate = new BigNumber('1').div(new BigNumber(json.data));
   return new BigNumber(amount).times(GBPRate).times(fee).toNumber();
 }
 
@@ -53,8 +55,8 @@ const plans = {
 const mappedPlans = Object.entries(plans).map(([key, plan]) => ({ value: key, label: plan.name }));
 
 function App() {
-  const [currencyOp, setCurrencyOp] = useState('USD');
-  const [plan, setPlan] = useState('free');
+  const [currencyOp, setCurrencyOp] = useSelectedCurrency();
+  const [plan, setPlan] = useSelectedPlan();
   const [value, setValue] = useState();
   const [loading, setLoading] = useState(false);
   const [calculatedValue, setCalculatedValue] = useState(0);
@@ -73,7 +75,7 @@ function App() {
       <div className='input-with-label'>
         <label>Your plan</label>
         <Select 
-          defaultValue={mappedPlans.find(currency => currency.value === 'free')} 
+          defaultValue={mappedPlans.find(mappedPlan => mappedPlan.value === plan)} 
           onChange={(value) => setPlan(value.value)} 
           options={mappedPlans} 
         />
@@ -81,7 +83,7 @@ function App() {
       <div className='input-with-label'>
         <label>Transaction currency</label>
         <Select 
-          defaultValue={mappedCurrencies.find(currency => currency.value === 'USD')} 
+          defaultValue={mappedCurrencies.find(currency => currency.value === currencyOp)} 
           onChange={(value) => setCurrencyOp(value.value)} 
           options={mappedCurrencies} 
         />
