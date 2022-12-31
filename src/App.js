@@ -1,6 +1,7 @@
 import './App.css';
 import currencies from './currencies.json';
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import plans from './plans.json';
+import { useCallback, useState } from 'react';
 import Select from 'react-select';
 import BigNumber from 'bignumber.js';
 import { useSelectedCurrency } from './hooks/useSelectedCurrency';
@@ -30,32 +31,6 @@ async function calculateCMC(amount, fee) {
 }
 
 const mappedCurrencies = currencies.map(currency => ({ value: currency.cc, label: currency.name }));
-const plans = {
-  free: {
-    name: 'Free (3%, 0.5$ FX Fee)',
-    fee: 1.03,
-    atmWithdrawalFee: 1.06,
-    fx: 0.5
-  },
-  camper: {
-    name: 'Happy Camper (2.5%, 0.4$ FX Fee)',
-    fee: 1.025,
-    atmWithdrawalFee: 1.05,
-    fx: 0.4
-  },
-  nomad: {
-    name: 'Digital Nomad (2%, 0.25$ FX Fee)',
-    fee: 1.02,
-    atmWithdrawalFee: 1.04,
-    fx: 0.25
-  },
-  highflyer: {
-    name: 'High Flyer (1.5%, 0.1$ FX Fee)',
-    fee: 1.015,
-    atmWithdrawalFee: 1.03,
-    fx: 0.1
-  }
-};
 const mappedPlans = Object.entries(plans).map(([key, plan]) => ({ value: key, label: plan.name }));
 
 function App() {
@@ -112,7 +87,9 @@ function App() {
         <p>{(calculatedValue + (withFxFee ? plans[plan].fx : 0)).toFixed(2)}$</p>
       </div> : null}
       <div className='input-with-label'>
-        <p style={{ width: "300px" }}>DISCLAIMER: exchange rates are approximate, but as close as possible to real ones. Service is not affiliated with maps.me</p>
+        <p style={{ width: "300px" }}>
+          DISCLAIMER: exchange rates are approximate, but as close as possible to real ones. Service is not affiliated with maps.me
+        </p>
       </div>
       <div className='input-with-label'>
         <p style={{ width: "150px" }}>Donations:</p>

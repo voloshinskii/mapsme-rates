@@ -1,0 +1,26 @@
+{
+    "free": {
+      "name": "Free (3%, 0.5$ FX Fee)",
+      "fee": 1.03,
+      "atmWithdrawalFee": 1.06,
+      "fx": 0.5
+    },
+    "camper": {
+      "name": "Happy Camper (2.5%, 0.4$ FX Fee)",
+      "fee": 1.025,
+      "atmWithdrawalFee": 1.05,
+      "fx": 0.4
+    },
+    "nomad": {
+      "name": "Digital Nomad (2%, 0.25$ FX Fee)",
+      "fee": 1.02,
+      "atmWithdrawalFee": 1.04,
+      "fx": 0.25
+    },
+    "highflyer": {
+      "name": "High Flyer (1.5%, 0.1$ FX Fee)",
+      "fee": 1.015,
+      "atmWithdrawalFee": 1.03,
+      "fx": 0.1
+    }
+  }
