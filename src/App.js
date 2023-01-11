@@ -46,6 +46,7 @@ function App() {
     setLoading(true);
     const costInGBP = await fetchRates(parseFloat(value.replace(',', '.')).toFixed(2), currencyOp, 'GBP', 0);
     const costInUSD = await calculateCMC(parseFloat(costInGBP), isAtmWithdrawal ? plans[plan].atmWithdrawalFee : plans[plan].fee);
+    console.log(costInUSD);
     setCalculatedValue(costInUSD);
     setLoading(false);
   }, [currencyOp, plan, value, isAtmWithdrawal]);
@@ -92,10 +93,8 @@ function App() {
         </p>
       </div>
       <div className='input-with-label'>
-        <p style={{ width: "150px" }}>Donations:</p>
-        <img src="https://donations.fra1.digitaloceanspaces.com/qr-sol.png" width={150} height={150} />
+        
       </div>
-      <p style={{ width: "500px" }}>F4aaRWB28DCH7yJp7TFZmufor3svaC6ih9L9tUqeyyEJ</p>
     </div>
   );
 }
