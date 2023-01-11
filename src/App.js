@@ -54,6 +54,11 @@ function App() {
 
   return (
     <div className="App">
+      <div className="header">
+        <a href="https://github.com/voloshinskii/mapsme-rates" target="_blank">
+          Github
+        </a>
+      </div>
       <div className='input-with-label'>
         <label>Your plan</label>
         <Select 
