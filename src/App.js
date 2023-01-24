@@ -6,7 +6,6 @@ import Select from 'react-select';
 import BigNumber from 'bignumber.js';
 import { useSelectedCurrency } from './hooks/useSelectedCurrency';
 import { useSelectedPlan } from './hooks/useSelectedPlan';
-import { Adsense } from '@ctrl/react-adsense';
 
 async function fetchRates(amount, currencyFrom, currencyTo, fee) {
   try {
@@ -58,6 +57,9 @@ function App() {
         <a href="https://github.com/voloshinskii/mapsme-rates" target="_blank">
           Github
         </a>
+        <a href="https://mapsmeapp.page.link/5reJffKsjRVbpqZ39" target="_blank">
+          Get maps.me card
+        </a>
       </div>
       <div className='input-with-label'>
         <label>Your plan</label>
@@ -97,12 +99,6 @@ function App() {
         <p style={{ width: "300px" }}>
           DISCLAIMER: exchange rates are approximate, but as close as possible to real ones. Service is not affiliated with maps.me
         </p>
-      </div>
-      <div style={{ width: "300px", height: "300px" }} className='input-with-label'>
-        <Adsense
-          client="ca-pub-7689175786090099"
-          slot="4422149099"
-        />
       </div>
     </div>
   );
