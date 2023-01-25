@@ -83,7 +83,7 @@ function App() {
       </div>
       <div className='input-with-label flex-row'>
         <input type="checkbox" id="fxfee" name="fxfee" checked={withFxFee} onChange={() => setWithFxFee(!withFxFee)} />
-        <label for="fxfee">FX Fee</label>
+        <label for="fxfee">International Fee</label>
       </div>
       <div className='input-with-label flex-row'>
         <input type="checkbox" id="atmwithdrawal" name="atmwithdrawal" checked={isAtmWithdrawal} onChange={() => setIsAtmWithdrawal(!isAtmWithdrawal)} />
