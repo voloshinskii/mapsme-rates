@@ -57,7 +57,7 @@ function App() {
         <a href="https://github.com/voloshinskii/mapsme-rates" target="_blank">
           Github
         </a>
-        <a href="https://tinyurl.com/mapsme-card" target="_blank">
+        <a href="https://cutt.ly/W9lKMLd" target="_blank">
           Get maps.me card ❤️
         </a>
       </div>
